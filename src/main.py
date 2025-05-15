@@ -91,7 +91,6 @@ def download(session):
 
 def pep(session):
     """Парсер документации PEP."""
-    results = [('Статус', 'Количество')]
     actual_statuses = defaultdict(int)
 
     soup = get_soup(session, PEPS_NUMERICAL_URL)
@@ -126,10 +125,10 @@ def pep(session):
             )
             logging.warning(error_msg)
 
-    for status, quantity in actual_statuses.items():
-        results.append((status, quantity))
-
+    results = [('Статус', 'Количество')]
+    results.extend(actual_statuses.items())
     results.append(('Total', sum(actual_statuses.values())))
+
     return results
 
 
